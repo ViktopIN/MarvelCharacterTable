@@ -14,13 +14,19 @@ struct Characters: Decodable {
 struct Character: Decodable {
     let id: Int?
     let name: String?
-    let discriptioin: String?
+    let descriptioin: String?
     let thumbnail: Image?
     let stories: StoryList?
 }
 
 struct Image: Decodable {
     let path: String?
+    let extens: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case path
+        case extens = "extension"
+    }
 }
 
 struct StoryList: Decodable {
