@@ -7,11 +7,14 @@
 
 import UIKit
 
-protocol TableViewScreenViewProtocol: class {
-    func receivingData()
+protocol TableViewScreenViewProtocol: AnyObject {
+    func getData() -> [Character]
 }
 
 class TableViewScreenView: UIViewController, TableViewScreenViewProtocol {
+// MARK: - Properties
+    let dataSource = [Character]()
+    
 // MARK: - View
     let tableView = UITableView(frame: .zero, style: .grouped)
     
@@ -30,9 +33,10 @@ class TableViewScreenView: UIViewController, TableViewScreenViewProtocol {
             self.setupLayout(with: size)
         }
     }
-// MARK: - Methods
-    func receivingData() {
     
+// MARK: - Methods
+    func getData() -> [Character] {
+        return dataSource
     }
     
     func setupHierarchy() {
@@ -48,13 +52,17 @@ class TableViewScreenView: UIViewController, TableViewScreenViewProtocol {
     }
 }
 
+// MARK: - Extensions -
+
 extension TableViewScreenView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
+        cell.configured(name: self.dataSource[indexPath.row].name ?? "Empty",
+                        id: self.dataSource[indexPath.row].id ?? 0000000)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return dataSource.count
     }
     
 }

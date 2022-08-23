@@ -26,11 +26,11 @@ class MarvelNetwork {
         return url
     }
 
-    func fetchCharacter(completion: @escaping (Characters?, _ error: String?) -> Void) {
+    func fetchCharacter(completion: @escaping (Character?, _ error: String?) -> Void) {
         
         AF.request(defaultUrl() as! URLRequestConvertible)
             .validate()
-            .responseDecodable(of: Characters.self) { (response) in
+            .responseDecodable(of: Character.self) { (response) in
                 if let error = response.error {
                     completion(nil, error.localizedDescription)
                 }
