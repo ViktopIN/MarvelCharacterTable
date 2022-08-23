@@ -7,6 +7,16 @@
 
 import UIKit
 
-protocol TableViewScreenPresenterProtocol: class {
-    var view: TableViewScreenViewProtocol { get }
+protocol TableViewScreenPresenterProtocol: AnyObject {
+    init (view: TableViewScreenViewProtocol)
+}
+
+class TableViewScreenPresenter: TableViewScreenPresenterProtocol {
+// MARK: - Properties
+    var view: TableViewScreenViewProtocol!
+    
+// MARK: - Initialize
+    required init(view: TableViewScreenViewProtocol) {
+        self.view = view
+    }
 }

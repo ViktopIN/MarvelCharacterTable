@@ -67,6 +67,7 @@
 		844F9B7528B4D519002CF192 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				844F9B8528B4E802002CF192 /* Network */,
 				844F9B7828B4D66B002CF192 /* Application */,
 				844F9B7928B4D672002CF192 /* Scene */,
 			);
@@ -132,6 +133,13 @@
 			children = (
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		844F9B8528B4E802002CF192 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
