@@ -14,6 +14,7 @@
 		844F9B7F28B4D6D8002CF192 /* TableViewScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F9B7E28B4D6D8002CF192 /* TableViewScreenView.swift */; };
 		844F9B8128B4D8F3002CF192 /* TableVIewScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F9B8028B4D8F3002CF192 /* TableVIewScreenPresenter.swift */; };
 		844F9B8328B4DD6D002CF192 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F9B8228B4DD6D002CF192 /* TableViewCell.swift */; };
+		844F9B8728B4EA58002CF192 /* CharacterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844F9B8628B4EA58002CF192 /* CharacterModel.swift */; };
 		9CEA708922B975DD236A6D57 /* Pods_MarvelCharacterTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D8FB3E11ED198391A86271B /* Pods_MarvelCharacterTable.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		844F9B7E28B4D6D8002CF192 /* TableViewScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewScreenView.swift; sourceTree = "<group>"; };
 		844F9B8028B4D8F3002CF192 /* TableVIewScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableVIewScreenPresenter.swift; sourceTree = "<group>"; };
 		844F9B8228B4DD6D002CF192 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		844F9B8628B4EA58002CF192 /* CharacterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterModel.swift; sourceTree = "<group>"; };
 		8D8FB3E11ED198391A86271B /* Pods_MarvelCharacterTable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MarvelCharacterTable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -138,6 +140,7 @@
 		844F9B7D28B4D69C002CF192 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				844F9B8628B4EA58002CF192 /* CharacterModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -155,7 +158,6 @@
 				578A97A8BFF16F8AE2BD1290 /* Pods-MarvelCharacterTable.debug.xcconfig */,
 				18D739B1C701E26C82D30E08 /* Pods-MarvelCharacterTable.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -283,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				844F9B8128B4D8F3002CF192 /* TableVIewScreenPresenter.swift in Sources */,
+				844F9B8728B4EA58002CF192 /* CharacterModel.swift in Sources */,
 				844F9B8328B4DD6D002CF192 /* TableViewCell.swift in Sources */,
 				844F9B7F28B4D6D8002CF192 /* TableViewScreenView.swift in Sources */,
 				844F9B6228B4D49D002CF192 /* AppDelegate.swift in Sources */,
