@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-class MarvelNetworkService {
+class MarvelNetwork {
 
     private func defaultUrl() -> URL? {
         var components = URLComponents()
@@ -16,9 +16,9 @@ class MarvelNetworkService {
         components.host = "gateway.marvel.com:443"
         components.path = "/v1/public/characters"
         let queryRequest = URLQueryItem(name: "nameStartsWith", value: "spider")
-        let queryTs = URLQueryItem(name: "ts", value: NetworkConstants.timeStamp)
-        let queryApikey = URLQueryItem(name: "apikey", value: NetworkConstants.marvelPublicKey)
-        let queryHash = URLQueryItem(name: "hash", value: NetworkConstants.hashValue)
+        let queryTs = URLQueryItem(name: "ts", value: hashData.timeStamp)
+        let queryApikey = URLQueryItem(name: "apikey", value: hashData.marvelPublicKey)
+        let queryHash = URLQueryItem(name: "hash", value: hashData.hashValue)
         components.queryItems = [queryRequest, queryTs, queryApikey, queryHash]
         
         let url = components.url
@@ -54,8 +54,8 @@ class MarvelNetworkService {
 
 //MARK: - NetworkConstants -
 
-extension MarvelNetworkService {
-    enum NetworkConstants {
+extension MarvelNetwork {
+    enum hashData {
         static let timeStamp = "5"
         static let marvelPublicKey = "6bf7cc2cb014568bc3f57e8181392810"
         static let marvelPrivateKey = "d5cbbc5c81c6b7f9de975af94dbac807ebf3ff3d"
