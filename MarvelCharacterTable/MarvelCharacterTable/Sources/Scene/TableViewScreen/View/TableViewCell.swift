@@ -13,13 +13,13 @@ class TableViewCell: UITableViewCell {
     static let identifier = "TableViewCell"
     
 // MARK: - Views
-    let nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         
         return label
     }()
     
-    let idLabel: UILabel = {
+    private lazy var idLabel: UILabel = {
         let label = UILabel()
         
         label.font = UIFont(name: "Courier New", size: Metrics.idLabelFontSize)

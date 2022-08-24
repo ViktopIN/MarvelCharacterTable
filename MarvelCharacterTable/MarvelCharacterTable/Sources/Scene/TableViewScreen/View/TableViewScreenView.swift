@@ -16,7 +16,7 @@ class TableViewScreenView: UIViewController, TableViewScreenViewProtocol {
     var dataSource = [Character]()
     let semaphore = DispatchSemaphore(value: 0)
 // MARK: - View
-    let tableView = UITableView(frame: .zero, style: .grouped)
+    private lazy var tableView = UITableView(frame: .zero, style: .grouped)
     
 // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -48,7 +48,6 @@ class TableViewScreenView: UIViewController, TableViewScreenViewProtocol {
             }
             if let data = data {
                 self.dataSource = (data.data?.results)!
-                print(self.dataSource)
                 self.semaphore.signal()
             }
         }
@@ -63,6 +62,8 @@ class TableViewScreenView: UIViewController, TableViewScreenViewProtocol {
         self.tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        
+        self.tableView.rowHeight = 60
     }
 }
 

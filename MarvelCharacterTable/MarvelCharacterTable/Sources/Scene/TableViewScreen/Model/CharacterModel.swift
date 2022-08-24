@@ -39,5 +39,4 @@ struct StoryList: Decodable {
 
 struct StorySummary: Decodable {
     let name: String?
-    let type: String?
 }

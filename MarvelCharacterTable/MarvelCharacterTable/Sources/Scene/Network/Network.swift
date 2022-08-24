@@ -15,6 +15,7 @@ class MarvelNetwork {
         components.scheme = "https"
         components.host = "gateway.marvel.com"
         components.path = "/v1/public/characters"
+        
         let queryRequest = URLQueryItem(name: "nameStartsWith", value: "spider")
         let queryTs = URLQueryItem(name: "ts", value: hashData.timeStamp)
         let queryApikey = URLQueryItem(name: "apikey", value: hashData.marvelPublicKey)
@@ -22,8 +23,6 @@ class MarvelNetwork {
         components.queryItems = [queryRequest, queryTs, queryApikey, queryHash]
         
         let url = components.url
-        
-        print(url as Any)
         
         return url!
     }
