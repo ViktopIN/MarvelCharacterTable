@@ -15,7 +15,6 @@ class TableViewScreenView: UIViewController, TableViewScreenViewProtocol {
 // MARK: - Properties
     var dataSource = [Character]()
     let semaphore = DispatchSemaphore(value: 0)
-    
 // MARK: - View
     let tableView = UITableView(frame: .zero, style: .grouped)
     
@@ -23,10 +22,10 @@ class TableViewScreenView: UIViewController, TableViewScreenViewProtocol {
     override func viewDidLoad() {
         title = "Heroes List"
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-//        let queue = Di
-       
-        getData()
+        DispatchQueue.global().async {
+            self.getData()
+        }
+        semaphore.wait()
         setupHierarchy()
         setupLayout(with: self.view.frame.size)
     }
@@ -50,6 +49,7 @@ class TableViewScreenView: UIViewController, TableViewScreenViewProtocol {
             if let data = data {
                 self.dataSource = (data.data?.results)!
                 print(self.dataSource)
+                self.semaphore.signal()
             }
         }
     }
@@ -73,14 +73,12 @@ extension TableViewScreenView: UITableViewDataSource {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
         cell.configured(name: self.dataSource[indexPath.row].name ?? "Empty",
                         id: self.dataSource[indexPath.row].id ?? 0000000)
-//                cell.configured(name: "rfof",
-//                       id: 1)
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return self.dataSource.count
-            return 2
+        return self.dataSource.count
     }
     
 }

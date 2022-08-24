@@ -29,9 +29,8 @@ class MarvelNetwork {
     }
 
     func fetchCharacter(completion: @escaping (DataMarvel?, _ error: String?) -> Void) {
-        
         AF.request(defaultUrl())
-            .responseDecodable(of: DataMarvel.self) { (response) in
+            .responseDecodable(of: DataMarvel.self, queue: .global()) { (response) in
                 if let error = response.error {
                     completion(nil, error.localizedDescription)
                 }
