@@ -6,6 +6,13 @@
 //
 
 import Foundation
+struct DataMarvel: Decodable {
+    let data: Results?
+}
+
+struct Results: Decodable {
+    let results: [Character]?
+}
 
 struct Character: Decodable {
     let id: Int?
@@ -26,8 +33,8 @@ struct Image: Decodable {
 }
 
 struct StoryList: Decodable {
+    let items: [StorySummary]?
     let returned: Int?
-    let items: StorySummary?
 }
 
 struct StorySummary: Decodable {

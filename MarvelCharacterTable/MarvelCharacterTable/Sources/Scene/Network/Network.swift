@@ -10,10 +10,10 @@ import Alamofire
 
 class MarvelNetwork {
 
-    private func defaultUrl() -> URL? {
+    private func defaultUrl() -> URL {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "gateway.marvel.com:443"
+        components.host = "gateway.marvel.com"
         components.path = "/v1/public/characters"
         let queryRequest = URLQueryItem(name: "nameStartsWith", value: "spider")
         let queryTs = URLQueryItem(name: "ts", value: hashData.timeStamp)
@@ -23,14 +23,15 @@ class MarvelNetwork {
         
         let url = components.url
         
-        return url
+        print(url as Any)
+        
+        return url!
     }
 
-    func fetchCharacter(completion: @escaping (Character?, _ error: String?) -> Void) {
+    func fetchCharacter(completion: @escaping (DataMarvel?, _ error: String?) -> Void) {
         
-        AF.request(defaultUrl() as! URLRequestConvertible)
-            .validate()
-            .responseDecodable(of: Character.self) { (response) in
+        AF.request(defaultUrl())
+            .responseDecodable(of: DataMarvel.self) { (response) in
                 if let error = response.error {
                     completion(nil, error.localizedDescription)
                 }

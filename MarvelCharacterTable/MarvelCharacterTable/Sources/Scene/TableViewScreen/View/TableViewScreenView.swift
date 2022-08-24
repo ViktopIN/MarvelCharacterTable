@@ -8,12 +8,13 @@
 import UIKit
 
 protocol TableViewScreenViewProtocol: AnyObject {
-    func getData() -> [Character]
+    func getData()
 }
 
 class TableViewScreenView: UIViewController, TableViewScreenViewProtocol {
 // MARK: - Properties
-    let dataSource = [Character]()
+    var dataSource = [Character]()
+    let semaphore = DispatchSemaphore(value: 0)
     
 // MARK: - View
     let tableView = UITableView(frame: .zero, style: .grouped)
@@ -23,9 +24,11 @@ class TableViewScreenView: UIViewController, TableViewScreenViewProtocol {
         title = "Heroes List"
         navigationController?.navigationBar.prefersLargeTitles = true
         
+//        let queue = Di
+       
+        getData()
         setupHierarchy()
         setupLayout(with: self.view.frame.size)
-        setupTableView()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -35,8 +38,20 @@ class TableViewScreenView: UIViewController, TableViewScreenViewProtocol {
     }
     
 // MARK: - Methods
-    func getData() -> [Character] {
-        return dataSource
+    func getData() {
+        let networkRequest = MarvelNetwork()
+        networkRequest.fetchCharacter { data, error in
+            if error != nil {
+                DispatchQueue.main.async {
+                    self.title = "error loading data"
+                    print(error!)
+                }
+            }
+            if let data = data {
+                self.dataSource = (data.data?.results)!
+                print(self.dataSource)
+            }
+        }
     }
     
     func setupHierarchy() {
@@ -45,10 +60,9 @@ class TableViewScreenView: UIViewController, TableViewScreenViewProtocol {
     
     private func setupLayout(with size: CGSize) {
         self.tableView.frame = CGRect(origin: .zero, size: size)
-    }
-    
-    private func setupTableView() {
         self.tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
     }
 }
 
@@ -59,16 +73,20 @@ extension TableViewScreenView: UITableViewDataSource {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
         cell.configured(name: self.dataSource[indexPath.row].name ?? "Empty",
                         id: self.dataSource[indexPath.row].id ?? 0000000)
+//                cell.configured(name: "rfof",
+//                       id: 1)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource.count
+//        return self.dataSource.count
+            return 2
     }
     
 }
 
 extension TableViewScreenView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        <#code#>
+        
     }
 }
