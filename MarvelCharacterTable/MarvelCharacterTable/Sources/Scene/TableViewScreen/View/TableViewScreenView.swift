@@ -20,7 +20,7 @@ class TableViewScreenView: UIViewController, TableViewScreenViewProtocol {
     
 // MARK: - Lifecycle
     override func viewDidLoad() {
-        title = "Heroes List"
+        title = "Spider Man Heroes List"
         navigationController?.navigationBar.prefersLargeTitles = true
         DispatchQueue.global().async {
             self.getData()

@@ -22,6 +22,9 @@ class TableViewCell: UITableViewCell {
     let idLabel: UILabel = {
         let label = UILabel()
         
+        label.font = UIFont(name: "Courier New", size: Metrics.idLabelFontSize)
+        label.textColor = UIColor.gray
+        
         return label
     }()
     
@@ -38,22 +41,26 @@ class TableViewCell: UITableViewCell {
 
 // MARK: - Methods
     func configured(name: String, id: Int) {
-        self.nameLabel.text = name
-        self.idLabel.text = String(id)
+        if name.count >= 27 {
+            self.nameLabel.text = "\(String(name.dropLast(name.count - 27))).."
+        } else {
+            self.nameLabel.text = name
+        }
+        self.idLabel.text = "id: \(String(id))"
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
         nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(Metrics.comicTitleLabelFontSize)
-            make.left.equalTo(contentView.snp.left).offset(Metrics.comicTitleLabelLeftOffset)
-            make.right.equalTo(contentView.snp.right).offset(Metrics.comicTitleLabelRightOffset)
+            make.top.equalTo(contentView.snp.top).offset(Metrics.titleLabelFontSize)
+            make.left.equalTo(contentView.snp.left).offset(Metrics.titleLabelLeftOffset)
+            make.right.equalTo(contentView.snp.right).offset(Metrics.titleLabelRightOffset)
         }
 
         idLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(contentView.snp.bottom).offset(Metrics.comicIdLabelBottomOffset)
-            make.left.equalTo(nameLabel.snp.left)
+            make.bottom.equalTo(contentView.snp.bottom).offset(Metrics.idLabelBottomOffset)
+            make.left.equalTo(nameLabel.snp.right).offset(Metrics.idLabelLeftOffset)
         }
     }
 }
@@ -61,13 +68,13 @@ class TableViewCell: UITableViewCell {
 //MARK: - Metrics
 extension TableViewCell {
     enum Metrics {
-        static let comicTitleLabelFontSize: CGFloat = 14
-        static let comicIdLabelFontSize: CGFloat = 12
+        static let titleLabelFontSize: CGFloat = 14
+        static let idLabelFontSize: CGFloat = 12
 
-        static let comicTitleLabelTopOffset = 15
-        static let comicTitleLabelLeftOffset = 17
-        static let comicTitleLabelRightOffset = -17
+        static let titleLabelLeftOffset = 17
+        static let titleLabelRightOffset = -17
 
-        static let comicIdLabelBottomOffset = -10
+        static let idLabelBottomOffset = -10
+        static let idLabelLeftOffset = -95
     }
 }
