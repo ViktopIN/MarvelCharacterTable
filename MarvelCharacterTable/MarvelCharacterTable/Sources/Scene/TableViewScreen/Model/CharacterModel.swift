@@ -17,7 +17,7 @@ struct Results: Decodable {
 struct Character: Decodable {
     let id: Int?
     let name: String?
-    let descriptioin: String?
+    let description: String?
     let thumbnail: Image?
     let stories: StoryList?
 }

@@ -24,8 +24,6 @@ class InformationScreenController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         commonInit()
-        print(data?.id as Any)
-        print(data?.name as Any)
     }
 
     //MARK: - Private functions

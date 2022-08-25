@@ -26,6 +26,7 @@ class InformationScreenView: UIScrollView {
         let label = UILabel()
         
         label.numberOfLines = 1
+        label.font = UIFont(name: "Courier New", size: Metrics.idFontSize)
         
         return label
     }()
@@ -33,7 +34,7 @@ class InformationScreenView: UIScrollView {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         
-        label.font = UIFont(name: "system", size: Metrics.nameFontSize)
+        label.font = UIFont.systemFont(ofSize: Metrics.nameFontSize)
         
         return label
     }()
@@ -89,7 +90,7 @@ class InformationScreenView: UIScrollView {
         }
 
         nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(parentView.safeAreaLayoutGuide.snp.top).offset(Metrics.primaryTopOffset)
+            make.top.equalTo(parentView.safeAreaLayoutGuide.snp.top).inset(Metrics.nameLabelTopInset)
             make.left.equalTo(parentView.safeAreaLayoutGuide.snp.left).offset(Metrics.primaryLeftOffset)
             make.right.equalTo(parentView.safeAreaLayoutGuide.snp.right).offset(Metrics.primaryRightOffset)
         }
@@ -100,39 +101,58 @@ class InformationScreenView: UIScrollView {
             make.height.equalTo(400)
             make.width.equalTo(300)
         }
-
+//
         idLabel.snp.makeConstraints { make in
-            make.top.equalTo(image.snp.bottom).offset(Metrics.primaryTopOffset)
-            make.left.equalTo(parentView.safeAreaLayoutGuide.snp.left).offset(Metrics.primaryLeftOffset)
-            make.right.equalTo(parentView.safeAreaLayoutGuide.snp.right).offset(Metrics.primaryRightOffset)
+            make.top.equalTo(nameLabel.snp.top).inset(10)
+            make.right.equalTo(nameLabel.snp.right)
+        }
+        
+        descriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(image.snp.bottom).offset(Metrics.descriptionTopOffset)
+            make.left.equalTo(parentView.snp.left).inset(Metrics.descriptionSidesInset)
+            make.right.equalTo(parentView.snp.right).inset(Metrics.descriptionSidesInset)
         }
 
         storiesLabel.snp.makeConstraints { make in
-            make.top.equalTo(idLabel.snp.bottom).offset(Metrics.primaryTopOffset)
-            make.left.equalTo(parentView.safeAreaLayoutGuide.snp.left).offset(Metrics.primaryLeftOffset)
-            make.right.equalTo(parentView.safeAreaLayoutGuide.snp.right).offset(Metrics.primaryRightOffset)
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(Metrics.primaryTopOffset)
+            make.left.equalTo(parentView.snp.left).inset(Metrics.descriptionSidesInset)
+            make.right.equalTo(parentView.snp.right).inset(Metrics.descriptionSidesInset)
         }
     }
     
 // MARK: - Methods
     func fillBlankData(data: Character) {
-        self.nameLabel.text = data.name
+        if let data = data.name {
+            if data.count <= 32 {
+                self.nameLabel.text = data
+            } else {
+                self.nameLabel.font = UIFont.systemFont(ofSize: Metrics.longNameFontSize)
+                self.nameLabel.text = data
+            }
+        }
         
         let id = data.id ?? 0
         
-        self.idLabel.text = String(id)
+        self.idLabel.text = "id: \(String(id))"
         
-        self.descriptionLabel.text = data.descriptioin
+        if data.description == "" {
+            self.descriptionLabel.text = "Description:\n-"
+        } else if let data = data.description {
+            self.descriptionLabel.text = "Description:\n\(data)"
+            print(data)
+        }
         
         self.storiesLabel.numberOfLines = data.stories?.returned ?? 0
         
-        var storiesFinal = [String()]
-        if let stories = data.stories?.items {
-            for story in stories {
-                storiesFinal.append(story.name ?? "")
+        var storiesFinal = ["Stories:"]
+        if data.stories?.returned == 0 {
+            storiesFinal.append("-")
+        } else if let stories = data.stories?.items {
+            for (num, story) in stories.enumerated() {
+                storiesFinal.append("\(num + 1). \(story.name ?? "")")
             }
         }
-        self.storiesLabel.text = storiesFinal.joined(separator: ",\n")
+        self.storiesLabel.text = storiesFinal.joined(separator: "\n")
         
         let queue = DispatchQueue(label: "myQueue", qos: .userInteractive)
         queue.async {
@@ -151,12 +171,18 @@ class InformationScreenView: UIScrollView {
 //MARK: - Metrics
 extension InformationScreenView {
     enum Metrics {
-        static let nameLabelFontSize: CGFloat = 22
-        static let nameFontSize: CGFloat = 14
+        static let nameFontSize: CGFloat = 18
+        static let longNameFontSize: CGFloat = 16
+        static let idFontSize: CGFloat = 10
 
         static let parentViewHeightOffset = 500
-
-        static let primaryTopOffset = 15
+        
+        static let nameLabelTopInset = -18
+        
+        static let descriptionTopOffset = 30
+        static let descriptionSidesInset = 45
+        
+        static let primaryTopOffset = 30
         static let primaryLeftOffset = 15
         static let primaryRightOffset = -20
     }
