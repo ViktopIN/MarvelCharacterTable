@@ -7,14 +7,11 @@
 
 import UIKit
 
-protocol TableViewScreenViewProtocol: AnyObject {
-    func getData()
-}
-
-class TableViewScreenView: UIViewController, TableViewScreenViewProtocol {
+class TableViewScreenView: UIViewController {
 // MARK: - Properties
-    var dataSource = [Character]()
-    let semaphore = DispatchSemaphore(value: 0)
+    private var dataSource = [Character]()
+    private var currentData: Character?
+    private let semaphore = DispatchSemaphore(value: 0)
 // MARK: - View
     private lazy var tableView = UITableView(frame: .zero, style: .grouped)
     
@@ -85,7 +82,15 @@ extension TableViewScreenView: UITableViewDataSource {
 }
 
 extension TableViewScreenView: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        currentData = dataSource[indexPath.row]
+        return indexPath
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        tableView.deselectRow(at: indexPath, animated: true)
+        let informationScreen = InformationScreenController()
+        informationScreen.data = currentData
+        navigationController?.pushViewController(informationScreen, animated: true)
     }
 }

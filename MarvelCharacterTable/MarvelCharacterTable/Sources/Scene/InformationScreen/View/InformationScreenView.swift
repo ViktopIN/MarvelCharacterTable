@@ -65,7 +65,6 @@ class InformationScreenView: UIScrollView {
     private func commonInit() {
         setupHierarchy()
         setupLayout()
-        setupView()
     }
 // MARK: - Settings
     private func setupHierarchy() {
@@ -82,6 +81,7 @@ class InformationScreenView: UIScrollView {
     }
 
     private func setupLayout() {
+        backgroundColor = .systemBackground
         parentView.snp.makeConstraints { make in
             make.edges.equalTo(self.snp.edges)
             make.width.equalTo(self.snp.width)
@@ -113,10 +113,6 @@ class InformationScreenView: UIScrollView {
             make.right.equalTo(parentView.safeAreaLayoutGuide.snp.right).offset(Metrics.primaryRightOffset)
         }
     }
-
-    private func setupView() {
-        backgroundColor = .systemBackground
-    }
     
 // MARK: - Methods
     func fillBlankData(data: Character) {
@@ -137,6 +133,18 @@ class InformationScreenView: UIScrollView {
             }
         }
         self.storiesLabel.text = storiesFinal.joined(separator: ",\n")
+        
+        let queue = DispatchQueue(label: "myQueue", qos: .userInteractive)
+        queue.async {
+            guard let imagePath = data.getThumbnailUrl(),
+                  let imageURL = URL(string: imagePath),
+                  let imageData = try? Data(contentsOf: imageURL)
+            else { return }
+
+            DispatchQueue.main.async {
+                self.image.image = UIImage(data: imageData)
+            }
+        }
     }
 }
 

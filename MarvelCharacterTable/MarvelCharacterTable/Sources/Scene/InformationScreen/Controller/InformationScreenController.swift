@@ -4,31 +4,31 @@
 //
 //  Created by Виктор on 24/08/2022.
 //
- import UIKit
+import UIKit
 
 class InformationScreenController: UIViewController {
 
 //MARK: - Properties
-    var data: Character?
+    var data: Character!
 
     private var informationScreenView: InformationScreenView? {
         guard isViewLoaded else { return nil }
         return view as? InformationScreenView
     }
 
-//MARK: - Lifecycle 
-
+//MARK: - Lifecycle
     override func loadView() {
-        view = informationScreenView
+        view = InformationScreenView()
     }
 
     override func viewDidLoad() {
-      super.viewDidLoad()
-      commonInit()
+        super.viewDidLoad()
+        commonInit()
+        print(data?.id as Any)
+        print(data?.name as Any)
     }
 
-    //MARK: - Private functions -
-
+    //MARK: - Private functions
     private func commonInit() {
         informationScreenView?.fillBlankData(data: data)
     }
